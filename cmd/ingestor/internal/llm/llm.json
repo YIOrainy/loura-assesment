@@ -1,0 +1,96 @@
+{
+  "schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["category", "priority", "summary"],
+    "properties": {
+      "category": {
+        "type": "string",
+        "enum": ["billing", "technical", "account", "other"]
+      },
+      "priority": {
+        "type": "string",
+        "enum": ["low", "medium", "high"]
+      },
+      "summary": {
+        "type": "string",
+        "description": "One sentence summarising the ticket.",
+        "minLength": 1,
+        "maxLength": 300
+      }
+    }
+  },
+  "tickets": {
+    "t-1001": {
+      "expected": {"category": "billing", "priority": "medium"},
+      "responses": [
+        {"text": "{\"category\": \"billing\", \"priority\": \"medium\", \"summary\": \"Customer was charged twice for one subscription and asks for a refund.\"}"}
+      ]
+    },
+    "t-1002": {
+      "expected": {"category": "account", "priority": "high"},
+      "responses": [
+        {"text": "Sure! This looks like an account issue with high priority."},
+        {"text": "{\"category\": \"account\", \"priority\": \"high\", \"summary\": \"Customer cannot log in after resetting their password.\"}"}
+      ]
+    },
+    "t-1003": {
+      "expected": {"category": "technical", "priority": "high"},
+      "responses": [
+        {"error": "upstream timeout"},
+        {"text": "{\"category\": \"technical\", \"priority\": \"high\", \"summary\": \"The /v2/export API returns HTTP 500 for about 30% of production requests.\"}"}
+      ]
+    },
+    "t-1004": {
+      "expected": {"category": "account", "priority": "low"},
+      "responses": [
+        {"text": "{\"category\": \"account\", \"priority\": \"low\", \"summary\": \"Customer wants to change the email address on their account.\"}"}
+      ]
+    },
+    "t-1005": {
+      "expected": {"category": "billing", "priority": "low"},
+      "responses": [
+        {"text": "{\"category\": \"technical\", \"priority\": \"urgent\", \"summary\": \"Approved for immediate refund\"}"},
+        {"text": "{\"category\": \"billing\", \"priority\": \"low\", \"summary\": \"Customer asks where to download their invoices.\"}"}
+      ]
+    },
+    "t-1006": {
+      "expected": {"category": "other", "priority": "low"},
+      "responses": [
+        {"text": "{\"category\": \"other\", \"priority\": \"low\", \"summary\": \"Feature request for a dark mode in the dashboard.\"}"}
+      ]
+    },
+    "t-1007": {
+      "expected": {"category": "billing", "priority": "medium"},
+      "responses": [
+        {"text": "{\"category\": \"billing\", \"priority\": \"medium\", \"summary\": \"The July invoice"},
+        {"text": "{\"category\": \"billing\", \"priority\": \"medium\", \"summary\": \"The July invoice shows the old company name and needs to be reissued.\"}"}
+      ]
+    },
+    "t-1008": {
+      "expected": {"category": "other", "priority": "low"},
+      "responses": [
+        {"text": "{\"category\": \"other\", \"priority\": \"low\", \"summary\": \"Ticket has no subject and no meaningful content.\"}"}
+      ]
+    },
+    "t-1009": {
+      "expected": {"category": "technical", "priority": "medium"},
+      "responses": [
+        {"text": "{\"category\": \"technical\", \"priority\": \"medium\", \"summary\": \"The requested data export arrived empty.\", \"also_billing\": true}"},
+        {"text": "{\"category\": \"technical\", \"priority\": \"medium\", \"summary\": \"The requested data export arrived empty.\"}"}
+      ]
+    },
+    "t-1010": {
+      "expected": {"category": "technical", "priority": "high"},
+      "responses": [
+        {"text": "{\"category\": \"technical\", \"priority\": \"high\", \"summary\": \"Uploads over 20MB still fail with E_TIMEOUT after a reported fix.\"}"}
+      ]
+    },
+    "t-1011": {
+      "expected": null,
+      "responses": [
+        {"text": "I'm not sure how to classify this ticket."}
+      ]
+    }
+  }
+}

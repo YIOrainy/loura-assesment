@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: tickets
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "tickets"]
+      interval: 1s
+      retries: 30
+
+  ingestor:
+    build: .
+    environment:
+      POSTGRES_DSN: postgres://postgres:postgres@postgres:5432/tickets?sslmode=disable
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy

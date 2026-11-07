@@ -1,0 +1,11 @@
+/ingestor
+*.DS_Store
+*.test
+.vscode*
+.idea/
+.claude
+.cursor
+cmd/ingestor/config.yaml
+coverage.out
+coverage.*.out
+coverage.html

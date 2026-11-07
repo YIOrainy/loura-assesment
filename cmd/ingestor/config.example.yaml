@@ -1,0 +1,28 @@
+# Log level: debug, info, warn, error (default: info)
+log_level: "info"
+
+http_addr: ":8080"
+inbound_rate_limit: 100 # requests per second
+inbound_burst: 200
+
+postgres_dsn: "postgres://postgres:postgres@localhost:5433/tickets?sslmode=disable"
+
+workers: 8
+max_attempts: 5
+retry_backoff: 5s # doubled on each attempt
+
+bloom_expected_items: 1000000
+bloom_false_positive_rate: 0.01
+
+sweeper_interval: 10s
+lease: 2m
+
+llm_latency: 300ms
+llm_tokens_per_second: 5
+llm_burst: 10
+
+breaker_failure_threshold: 5
+breaker_open_timeout: 30s
+
+webhook_url: ""
+webhook_timeout: 5s
